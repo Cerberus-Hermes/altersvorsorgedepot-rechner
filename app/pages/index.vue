@@ -179,6 +179,106 @@
         </div>
       </div>
 
+      <!-- Altes vs. Neues System -->
+      <div class="bg-surface rounded-3xl p-5 shadow-soft space-y-5">
+        <div class="flex items-center gap-2 mb-1">
+          <div class="w-8 h-8 rounded-xl bg-secondary/10 flex items-center justify-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-secondary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              <polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <h3 class="text-base font-extrabold text-txt">Alt vs. Neu im Vergleich</h3>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Altes Riester -->
+          <div class="bg-bg rounded-2xl p-4 space-y-3">
+            <div class="text-xs font-bold text-txt-muted uppercase tracking-wide">Altes Riester</div>
+            <div>
+              <div class="text-xs text-txt-muted">Grundzulage</div>
+              <div class="text-lg font-extrabold text-txt">{{ formatEuro(ergebnis.alt.grundzulage) }}</div>
+            </div>
+            <div>
+              <div class="text-xs text-txt-muted">Kinderzulage</div>
+              <div class="text-lg font-extrabold text-txt">{{ formatEuro(ergebnis.alt.kinderzulage) }}</div>
+            </div>
+            <div>
+              <div class="text-xs text-txt-muted">Gesamtförderung/Jahr</div>
+              <div class="text-lg font-extrabold text-txt">{{ formatEuro(ergebnis.alt.forderungGesamt) }}</div>
+            </div>
+            <div class="pt-2 border-t border-surface">
+              <div class="text-xs text-txt-muted">Jährliche Kosten</div>
+              <div class="text-sm font-bold text-danger">{{ formatEuro(ergebnis.alt.kostenJahr) }}</div>
+              <div class="text-[10px] text-txt-muted">ca. 1,5% p.a. (Versicherung)</div>
+            </div>
+          </div>
+
+          <!-- Neues Depot -->
+          <div class="bg-gradient-to-br from-success/10 to-success/5 rounded-2xl p-4 space-y-3 border border-success/20">
+            <div class="text-xs font-bold text-success uppercase tracking-wide">Neues Depot</div>
+            <div>
+              <div class="text-xs text-txt-muted">Grundzulage</div>
+              <div class="text-lg font-extrabold text-txt">{{ formatEuro(ergebnis.neu.grundzulage) }}</div>
+            </div>
+            <div>
+              <div class="text-xs text-txt-muted">Kinderzulage</div>
+              <div class="text-lg font-extrabold text-txt">{{ formatEuro(ergebnis.neu.kinderzulage) }}</div>
+            </div>
+            <div>
+              <div class="text-xs text-txt-muted">Gesamtförderung/Jahr</div>
+              <div class="text-lg font-extrabold text-success">{{ formatEuro(ergebnis.neu.forderungGesamt) }}</div>
+            </div>
+            <div class="pt-2 border-t border-success/20">
+              <div class="text-xs text-txt-muted">Jährliche Kosten</div>
+              <div class="text-sm font-bold text-success">{{ formatEuro(ergebnis.neu.kostenJahr) }}</div>
+              <div class="text-[10px] text-txt-muted">ca. 0,3% p.a. (ETF-Depot)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gewinner -->
+        <div
+          class="rounded-2xl p-4 text-center"
+          :class="ergebnis.vergleichGewinner === 'neu' ? 'bg-success/10 border border-success/20' : ergebnis.vergleichGewinner === 'alt' ? 'bg-bg' : 'bg-bg'"
+        >
+          <div class="text-xs font-bold text-txt-muted mb-1">
+            {{ ergebnis.vergleichGewinner === 'gleich' ? 'Kein Unterschied' : 'Besser für Sie:' }}
+          </div>
+          <div
+            class="text-xl font-extrabold"
+            :class="ergebnis.vergleichGewinner === 'neu' ? 'text-success' : ergebnis.vergleichGewinner === 'alt' ? 'text-txt' : 'text-txt-muted'"
+          >
+            {{ ergebnis.vergleichGewinner === 'neu' ? 'Neues Depot' : ergebnis.vergleichGewinner === 'alt' ? 'Altes Riester' : 'Beide gleich' }}
+          </div>
+          <div class="text-xs text-txt-muted mt-1">
+            Unterschied nach {{ jahre }} Jahren: {{ formatEuro(Math.abs(ergebnis.vergleichDifferenz)) }}
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div class="bg-bg rounded-2xl p-4 space-y-2">
+          <div class="flex items-start gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" class="shrink-0 mt-0.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4M12 8h.01"/>
+            </svg>
+            <p class="text-xs text-txt-muted leading-relaxed">
+              <strong class="text-txt">Flexibilität:</strong> Das neue Depot erlaubt Kapitalauszahlung statt Zwangsurnte. Außerdem fallen ETF-Depots deutlich günstiger aus als klassische Riester-Versicherungen.
+            </p>
+          </div>
+          <div class="flex items-start gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" class="shrink-0 mt-0.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4M12 8h.01"/>
+            </svg>
+            <p class="text-xs text-txt-muted leading-relaxed">
+              <strong class="text-txt">Kinderzulage:</strong> Beim alten Riester gab es die volle Kinderzulage (300 €) auch bei niedrigem Eigenbeitrag. Beim neuen Depot ist sie anteilig gekoppelt an den eigenen Beitrag.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <!-- Hinweise -->
       <div class="bg-bg rounded-2xl p-4 space-y-2">
         <p class="text-xs text-txt-muted leading-relaxed">
@@ -218,42 +318,94 @@ const ergebnis = computed(() => {
   const eigenJahr = monatlicherBeitrag.value * 12
   const grenzSteuerSatz = getGrenzSteuerSatz(brutto.value)
 
+  // === NEUES SYSTEM (Altersvorsorgedepot) ===
   // Grundzulage: 50% auf erste 360€, 25% auf 361-1800€
-  let grundzulage = 0
+  let grundzulageNeu = 0
   if (eigenJahr >= 120) {
     const erste360 = Math.min(eigenJahr, 360)
     const rest = Math.max(0, Math.min(eigenJahr, 1800) - 360)
-    grundzulage = erste360 * 0.50 + rest * 0.25
-    grundzulage = Math.min(grundzulage, 540)
+    grundzulageNeu = erste360 * 0.50 + rest * 0.25
+    grundzulageNeu = Math.min(grundzulageNeu, 540)
   }
 
-  // Kinderzulage: max 300€ pro Kind, anteilig ab 120€, voll ab 300€ EB
-  let kinderzulage = 0
+  // Kinderzulage: max 300€ pro Kind, anteilig ab 120€
+  let kinderzulageNeu = 0
   if (kinder.value > 0 && eigenJahr >= 120) {
     const kzProKind = Math.min(300, Math.max(120, eigenJahr))
-    kinderzulage = kzProKind * kinder.value
+    kinderzulageNeu = kzProKind * kinder.value
   }
 
-  // Steuervorteil (Sonderausgabenabzug, vereinfacht)
-  const steuerVorteil = eigenJahr * grenzSteuerSatz
+  const steuerVorteilNeu = eigenJahr * grenzSteuerSatz
+  const forderungGesamtNeu = grundzulageNeu + kinderzulageNeu + steuerVorteilNeu
 
-  const forderungGesamt = grundzulage + kinderzulage + steuerVorteil
+  // Kosten neu (ETF-Depot, ca. 0,3% p.a. auf das angesparte Kapital)
+  // Vereinfacht: Kosten auf Eigenbeitrag + Zulagen pro Jahr
+  const kostenJahrNeu = (eigenJahr + grundzulageNeu + kinderzulageNeu) * 0.003
 
-  // Kapitalendwertberechnung
+  // === ALTES SYSTEM (Riester) ===
+  // Grundzulage: 175 €/Jahr (bei Mindesteigenbeitrag 60 €/Jahr)
+  let grundzulageAlt = 0
+  if (eigenJahr >= 60) {
+    grundzulageAlt = 175
+  }
+
+  // Kinderzulage: 300 € pro Kind/Jahr (voll, wenn Mindestbeitrag erfüllt)
+  let kinderzulageAlt = 0
+  if (kinder.value > 0 && eigenJahr >= 60) {
+    kinderzulageAlt = 300 * kinder.value
+  }
+
+  const steuerVorteilAlt = eigenJahr * grenzSteuerSatz
+  const forderungGesamtAlt = grundzulageAlt + kinderzulageAlt + steuerVorteilAlt
+
+  // Kosten alt (klassische Riester-Versicherung, ca. 1,5% p.a.)
+  const kostenJahrAlt = (eigenJahr + grundzulageAlt + kinderzulageAlt) * 0.015
+
+  // === KAPITALVERGLEICH ===
   const r = rendite.value / 100
-  const kapitalMit = berechneKapital(eigenJahr + grundzulage + kinderzulage, r, jahre.value)
+
+  // Neu: mit Kostenabzug
+  const einzahlungNeuNetto = eigenJahr + grundzulageNeu + kinderzulageNeu - kostenJahrNeu
+  const kapitalNeu = berechneKapital(einzahlungNeuNetto, r, jahre.value)
+
+  // Alt: mit höheren Kosten
+  const einzahlungAltNetto = eigenJahr + grundzulageAlt + kinderzulageAlt - kostenJahrAlt
+  const kapitalAlt = berechneKapital(einzahlungAltNetto, r, jahre.value)
+
+  // Ohne Förderung (nur eigene Einzahlung, keine Kosten)
   const kapitalOhne = berechneKapital(eigenJahr, r, jahre.value)
 
+  // Vergleich
+  const vergleichDifferenz = kapitalNeu - kapitalAlt
+  let vergleichGewinner: 'neu' | 'alt' | 'gleich'
+  if (vergleichDifferenz > 100) vergleichGewinner = 'neu'
+  else if (vergleichDifferenz < -100) vergleichGewinner = 'alt'
+  else vergleichGewinner = 'gleich'
+
   return {
-    grundzulage,
-    kinderzulage,
-    steuerVorteil,
+    grundzulage: grundzulageNeu,
+    kinderzulage: kinderzulageNeu,
+    steuerVorteil: steuerVorteilNeu,
     grenzSteuerSatz,
-    forderungGesamt,
+    forderungGesamt: forderungGesamtNeu,
     eigenEinzahlungGesamt: eigenJahr * jahre.value,
-    kapitalMitForderung: kapitalMit,
+    kapitalMitForderung: kapitalNeu,
     kapitalOhneForderung: kapitalOhne,
-    differenz: kapitalMit - kapitalOhne,
+    differenz: kapitalNeu - kapitalOhne,
+    neu: {
+      grundzulage: grundzulageNeu,
+      kinderzulage: kinderzulageNeu,
+      forderungGesamt: forderungGesamtNeu,
+      kostenJahr: kostenJahrNeu,
+    },
+    alt: {
+      grundzulage: grundzulageAlt,
+      kinderzulage: kinderzulageAlt,
+      forderungGesamt: forderungGesamtAlt,
+      kostenJahr: kostenJahrAlt,
+    },
+    vergleichGewinner,
+    vergleichDifferenz,
   }
 })
 
