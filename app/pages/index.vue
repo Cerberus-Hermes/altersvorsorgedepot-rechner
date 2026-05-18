@@ -17,9 +17,9 @@
 
     <main class="max-w-2xl mx-auto px-5 pt-6 space-y-6 animate-slide-up">
       <!-- Intro -->
-      <div class="bg-gradient-to-br from-primary/90 to-primary rounded-3xl p-5 text-white shadow-glow">
-        <h2 class="text-xl font-extrabold mb-2">Wie viel Förderung bekommen Sie?</h2>
-        <p class="text-sm opacity-90 leading-relaxed">
+      <div class="bg-gradient-to-br from-[#E5704A] to-primary rounded-3xl p-5 text-white shadow-glow">
+        <h2 class="text-xl font-extrabold mb-2 drop-shadow-sm">Wie viel Förderung bekommen Sie?</h2>
+        <p class="text-sm text-white/95 leading-relaxed drop-shadow-sm">
           Ab 2027 ersetzt das Altersvorsorgedepot die Riester-Rente. Berechnen Sie jetzt Ihre staatliche Zulage und den Steuervorteil.
         </p>
       </div>
